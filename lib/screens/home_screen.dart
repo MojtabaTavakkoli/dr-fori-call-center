@@ -13,7 +13,8 @@ const _kIncomingCallLabel = 'تماس ورودی';
 const _kOutgoingCallLabel = 'تماس خروجی';
 const _kMissedCallLabel = 'تماس از دست رفته';
 const _kPermissionTitle = 'دسترسی به تماس‌ها';
-const _kPermissionMessage = 'برای نمایش تماس‌های اخیر، به اپلیکیشن اجازه دسترسی به لیست تماس‌ها را بدهید.';
+const _kPermissionMessage =
+    'برای نمایش تماس‌های اخیر، به اپلیکیشن اجازه دسترسی به لیست تماس‌ها را بدهید.';
 const _kGrantPermissionLabel = 'اعطای دسترسی';
 const _kLoadingMessage = 'در حال بارگذاری...';
 const _kRefreshLabel = 'بروزرسانی';
@@ -39,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _checkPermissionAndLoadCalls() async {
     setState(() => _isLoading = true);
-    
+
     _hasPermission = await _callService.hasPermission();
-    
+
     if (_hasPermission) {
       await _loadCalls();
     } else {
@@ -61,9 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadCalls() async {
     setState(() => _isLoading = true);
-    
+
     final calls = await _callService.getRecentCalls();
-    
+
     setState(() {
       _calls = calls;
       _isLoading = false;
@@ -83,7 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message, style: DRTypography.bodyMd.copyWith(color: Colors.white)),
+        content: Text(
+          message,
+          style: DRTypography.bodyMd.copyWith(color: Colors.white),
+        ),
         backgroundColor: DRColors.success,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: DRRadius.borderMd),
@@ -145,7 +149,12 @@ class _HomeScreenState extends State<HomeScreen> {
           if (index == 0) {
             return Padding(
               padding: const EdgeInsets.only(bottom: DRSpacing.md),
-              child: DRText.label(_kRecentCallsHeader, color: isDark ? DRColors.neutral.shade400 : DRColors.neutral.shade500),
+              child: DRText.label(
+                _kRecentCallsHeader,
+                color: isDark
+                    ? DRColors.neutral.shade400
+                    : DRColors.neutral.shade500,
+              ),
             );
           }
           return _buildCallCard(_calls[index - 1]);
@@ -181,10 +190,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: DRColors.warning.withValues(alpha: 0.1),
                 borderRadius: DRRadius.borderFull,
               ),
-              child: Icon(Icons.phone_locked_outlined, size: 40, color: DRColors.warning),
+              child: Icon(
+                Icons.phone_locked_outlined,
+                size: 40,
+                color: DRColors.warning,
+              ),
             ),
             const SizedBox(height: DRSpacing.lg),
-            const DRText.headlineSm(_kPermissionTitle, textAlign: TextAlign.center),
+            const DRText.headlineSm(
+              _kPermissionTitle,
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: DRSpacing.sm),
             const DRText(_kPermissionMessage, textAlign: TextAlign.center),
             const SizedBox(height: DRSpacing.xl),
@@ -211,7 +227,11 @@ class _HomeScreenState extends State<HomeScreen> {
               color: DRColors.primary.withValues(alpha: 0.1),
               borderRadius: DRRadius.borderFull,
             ),
-            child: Icon(Icons.phone_outlined, size: 40, color: DRColors.primary),
+            child: Icon(
+              Icons.phone_outlined,
+              size: 40,
+              color: DRColors.primary,
+            ),
           ),
           const SizedBox(height: DRSpacing.lg),
           const DRText.headlineSm(_kNoCallsMessage),
@@ -238,10 +258,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 2),
                       Row(
                         children: [
-                          DRText.caption(_getCallTypeLabel(call.type), color: _getCallTypeColor(call.type)),
-                          if (call.duration != null && call.duration!.inSeconds > 0) ...[
-                            DRText.caption(' • ', color: DRColors.neutral.shade400),
-                            DRText.caption(call.formattedDuration, color: DRColors.neutral.shade400),
+                          DRText.caption(
+                            _getCallTypeLabel(call.type),
+                            color: _getCallTypeColor(call.type),
+                          ),
+                          if (call.duration != null &&
+                              call.duration!.inSeconds > 0) ...[
+                            DRText.caption(
+                              ' • ',
+                              color: DRColors.neutral.shade400,
+                            ),
+                            DRText.caption(
+                              call.formattedDuration,
+                              color: DRColors.neutral.shade400,
+                            ),
                           ],
                         ],
                       ),
@@ -265,11 +295,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: DRText.caption(
                           call.simLabel,
-                          color: call.simSlot == 0 ? DRColors.primary : DRColors.secondary,
+                          color: call.simSlot == 0
+                              ? DRColors.primary
+                              : DRColors.secondary,
                         ),
                       ),
                     if (call.simLabel.isNotEmpty) const SizedBox(height: 4),
-                    DRText.caption(call.timeAgo, color: DRColors.neutral.shade400),
+                    DRText.caption(
+                      call.timeAgo,
+                      color: DRColors.neutral.shade400,
+                    ),
                   ],
                 ),
               ],
@@ -322,14 +357,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String _getCallTypeLabel(CallType type) => switch (type) {
-        CallType.incoming => _kIncomingCallLabel,
-        CallType.outgoing => _kOutgoingCallLabel,
-        CallType.missed => _kMissedCallLabel,
-      };
+    CallType.incoming => _kIncomingCallLabel,
+    CallType.outgoing => _kOutgoingCallLabel,
+    CallType.missed => _kMissedCallLabel,
+  };
 
   Color _getCallTypeColor(CallType type) => switch (type) {
-        CallType.incoming => DRColors.success,
-        CallType.outgoing => DRColors.primary,
-        CallType.missed => DRColors.error,
-      };
+    CallType.incoming => DRColors.success,
+    CallType.outgoing => DRColors.primary,
+    CallType.missed => DRColors.error,
+  };
 }

@@ -1,6 +1,6 @@
 name: dr_fori_call_center
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -12,6 +12,9 @@ dependencies:
   google_fonts: ^6.2.1
   call_log: ^5.0.5
   permission_handler: ^12.0.0
+  flutter_background_service: ^5.0.10
+  flutter_local_notifications: ^18.0.1
+  shared_preferences: ^2.3.4
   ui_kit:
     path: packages/ui_kit
 
