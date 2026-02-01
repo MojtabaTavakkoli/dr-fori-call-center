@@ -1,17 +1,16 @@
-name: dr_fori_call_center
-description: "A new Flutter project."
+name: ui_kit
+description: A modern UI kit package for the Caller Assistant app with reusable components and design tokens.
+version: 1.0.0
 publish_to: 'none'
-version: 0.1.0
 
 environment:
   sdk: ^3.9.2
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
-  ui_kit:
-    path: packages/ui_kit
 
 dev_dependencies:
   flutter_test:
